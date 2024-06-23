@@ -6,17 +6,19 @@ import axios from 'axios';
 function App() {
   const [prompt, setPrompt] = useState('');
   const [response, setResponse] = useState('');
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await axios.post('http://127.0.0.1:8000/predict', { input: prompt });
-      setResponse(result.data.response);
+      const result = await axios.post('https://c1e5-34-70-139-105.ngrok-free.app/predict', { input: prompt });
+      setResponse(result.data.messages);
+
     } catch (error) {
       console.error('Error fetching response:', error);
       setResponse('There was an error processing your request.');
     }
   };
+  
 
   return (
     <div className="App">
@@ -44,8 +46,11 @@ function App() {
         </div>
         <div className="response-section">
           <h4>Response</h4>
+          <div className='input'>
+            <p>{prompt}</p>
+          </div>
           <div className="response">
-            <pre>{response}</pre>
+            <p>{response}</p>
           </div>
         </div>
       </div>
